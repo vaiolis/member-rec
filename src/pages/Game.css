@@ -1,0 +1,77 @@
+.Game {
+    background-color: black;
+    height: 110vh;
+    margin-top: -25px;
+    justify-content: center;
+}
+
+.game-comps {
+    display: flex;
+    justify-content: center;
+    padding: 10%;
+}
+
+.lives {
+    height: 200px;
+    width: 200px;
+    text-align: center;
+}
+
+.image {
+    background-color:bisque;
+    height: 400px;
+    width: 400px;
+    text-align: center;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.current-score {
+    height: 200px;
+    width: 200px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 3rem;
+    color: white;
+    margin-top:-10px;
+}
+
+.mobile-image {
+    display: none;
+}
+
+@media screen and (max-width: 500px) {
+    .Game {
+        background-color: black;
+        margin-top: -25px;
+        justify-content: center;
+    }
+
+    .game-comps {
+        justify-content: center;
+        padding: 10%;
+    }
+    
+    .lives {
+        text-align: center;
+    }
+    
+    .image {
+        display: none;
+    }
+
+    .mobile-image {
+        background-color: aqua;
+        width: 100vw;
+        height: 300px;
+        display: block;
+        margin-top: -50px;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        align-self: center;
+    }
+    
+}
