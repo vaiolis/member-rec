@@ -1,8 +1,14 @@
 {
   "env": {
-    "browser": true
+    "browser": true,
+    "es2021": true
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "extends": [
+    "eslint:recommended", 
+    "plugin:react/recommended", 
+    "plugin:prettier/recommended", 
+    "plugin:react-hooks/recommended"
+  ],
   "overrides": [
     {
       "files": ["**/*.test.js", "**/*.test.jsx"],
@@ -12,14 +18,17 @@
     }
   ],
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": "latest",
     "sourceType": "module",
     "ecmaFeatures": {
-      "modules": true
+      "jsx": true
     }
   },
-  "plugins": ["react"],
-  "rules": {},
+  "plugins": ["react", "react-hooks"],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
+  },
   "settings": {
     "react": {
       "version": "18.2.0"
