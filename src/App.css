@@ -10,13 +10,12 @@
 
 .main {
   display: flex;
-    justify-content: center;
-    align-items: center
+  justify-content: center;
+  align-items: center;
 }
 
 p {
   color: grey;
-
 }
 
 h1 {
@@ -32,14 +31,14 @@ h1 {
 }
 
 button {
-  background: #0792FF;
+  background: #0792ff;
   border-radius: 5px;
   border: 0;
-  padding: .5% 1% .5% 1%;
+  padding: 0.5% 1% 0.5% 1%;
   color: aliceblue;
   width: 200px;
   height: 50px;
-  font-size:larger;
+  font-size: larger;
   margin-top: 3%;
 }
 
@@ -58,7 +57,6 @@ button:hover {
 
 @media screen and (max-width: 500px) {
   .logo {
-    
   }
   .logo-img {
     margin-left: 10%;

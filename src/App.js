@@ -1,8 +1,6 @@
+import React from 'react';
 import './App.css';
-import React from "react";
 
 export default function App() {
-  return (
-    <h1>Routes broken</h1>
-  );
+  return <h1>Routes broken</h1>;
 }

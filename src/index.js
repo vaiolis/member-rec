@@ -1,15 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
-import { 
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
-import Home from './pages/Home'
-import Game from './pages/Game'
-import Results from './pages/Results'
+import Home from './pages/Home';
+import Game from './pages/Game';
+import Results from './pages/Results';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
