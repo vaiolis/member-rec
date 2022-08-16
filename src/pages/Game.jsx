@@ -1,30 +1,28 @@
-import React from "react";
+import React, { useState } from 'react';
+import NameForm from '../components/NameForm';
 import './Game.css';
-import NameForm from '../components/NameForm'
 
-export default function Game () {
-    return (
-        <div className="Game">
-            <div className="game-comps">
-                <div className="lives">
-                    <h1>Lives</h1>
-                    <h2>3</h2>
-                </div>
-                <div className="image">
+export default function Game() {
+  const [name, setName] = useState('');
 
-                </div>
-                <div className="current-score">
-                    <h1>Score</h1>
-                    <h2>7</h2>
-                </div>
-            </div>
-            <div className="mobile-image">
-
-            </div>
-            <div>
-            
-                <NameForm></NameForm>
-            </div>
+  return (
+    <div className="Game">
+      {name && <h1 className="player-name">Player Name: {name}</h1>}
+      <div className="game-comps">
+        <div className="lives">
+          <h1>Lives</h1>
+          <h2>3</h2>
         </div>
-    )
+        <div className="image" />
+        <div className="current-score">
+          <h1>Score</h1>
+          <h2>7</h2>
+        </div>
+      </div>
+      <div className="mobile-image" />
+      <div>
+        <NameForm name={name} setName={setName} />
+      </div>
+    </div>
+  );
 }

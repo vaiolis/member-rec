@@ -1,35 +1,38 @@
-import React from "react";
-import './NameForm.css'
+import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
+import './NameForm.css';
 
-class NameForm extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {value: ''};
-  
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
-    }
-  
-    handleChange(event) {
-      this.setState({value: event.target.value});
-    }
-  
-    handleSubmit(event) {
-      alert('A name was submitted: ' + this.state.value);
-      event.preventDefault();
-    }
-  
-    render() {
-      return (
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Name:
-            <input className="name-input" type="text" value={this.state.value} onChange={this.handleChange} />
-          </label>
-          <input className='submit-btn' type="submit" value="SUBMIT" />
-        </form>
-      );
-    }
-  }
+function NameForm(props) {
+  const { name, setName } = props;
+  const handleChange = useCallback(
+    (e) => {
+      setName(e.target.value);
+    },
+    [setName]
+  );
 
-  export default NameForm
+  const handleSubmit = useCallback(
+    (e) => {
+      alert(`A name was submitted: ${name}`);
+      e.preventDefault();
+    },
+    [name]
+  );
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Name:
+        <input className="name-input" type="text" value={name} onChange={handleChange} />
+      </label>
+      <input className="submit-btn" type="submit" value="SUBMIT" />
+    </form>
+  );
+}
+
+NameForm.propTypes = {
+  name: PropTypes.string,
+  setName: PropTypes.func,
+};
+
+export default NameForm;
