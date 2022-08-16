@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NameForm from '../components/NameForm';
 import './Game.css';
 
 export default function Game() {
+  const [name, setName] = useState('');
+
   return (
     <div className="Game">
+      {name && <h1 className="player-name">Player Name: {name}</h1>}
       <div className="game-comps">
         <div className="lives">
           <h1>Lives</h1>
@@ -18,7 +21,7 @@ export default function Game() {
       </div>
       <div className="mobile-image" />
       <div>
-        <NameForm />
+        <NameForm name={name} setName={setName} />
       </div>
     </div>
   );
