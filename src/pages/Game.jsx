@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import NameForm from '../components/NameForm';
+import Question from '../components/Question';
 import './Game.css';
 
 export default function Game() {
@@ -19,6 +20,7 @@ export default function Game() {
           <h2>7</h2>
         </div>
       </div>
+      <Question></Question>
       <div className="mobile-image" />
       <div>
         <NameForm name={name} setName={setName} />
