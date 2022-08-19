@@ -2,9 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { doc ,getDoc, getFirestore } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import React from 'react';
-import PropTypes from 'prop-types';
-
-
+import './Question.css';
 
 function Question(props) {
     console.log("started");
@@ -27,35 +25,32 @@ function Question(props) {
   var officers;
   function initConnection() {
     const docRef = doc(db,'main','People');
-    const doc = getDoc(docRef).then((doc) => {
+    getDoc(docRef).then((docData) => {
         try {
-            console.log(doc)
-            data = doc.data();
+          console.log(docData);
+          data = docData.data();
+          console.log(data);
         } catch (error) {
-            console.log(error);
+          console.log(error);
         }
-        officers = data.officers;
+        officers = data.Officers;
         randList = genRandList(officers.length)
-        getDownloadURL(ref(storage,officers[randList[index]].ImageUrl)).then((url) => {
-        currImg = url;
-        });
+        currImg = officers[randList[index]].ImageUrl;
+        console.log(currImg);
         correctName = officers[randList[index]].name;
+        document.getElementById("PersonImg").setAttribute("src",currImg);
     });
-     
-    
   }
   function nextQuestion() {
     index++;
-    getDownloadURL(ref(storage,officers[randList[index]].ImageUrl)).then((url) => {
-      currImg = url;
-    });
+    currImg = officers[randList[index]].ImageUrl;
     correctName = officers[randList[index]].name;
   }
   function genRandList(range) {
     randList = new Array();
     var numList = new Array();
     for(let i = 0; i < range; i++) {
-      numList.push(i);
+       numList.push(i);
     }
     for(let i = 0; i < range; i++) {
       var randInd = Math.floor(Math.random() * numList.length);
@@ -65,11 +60,8 @@ function Question(props) {
     return randList;
   }
   initConnection();
-
-  return <img src={currImg}></img>;
+  console.log("near return")
+  return (<img src="" id = "PersonImg" class = "person-img"></img>);
 }
-
-Question.propTypes = {
-};
 
 export default Question;
