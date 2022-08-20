@@ -3,6 +3,8 @@ import { doc ,getDoc, getFirestore } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import React from 'react';
 import './Question.css';
+import './NameForm';
+import NameForm from './NameForm';
 
 function Question(props) {
     console.log("started");
@@ -45,6 +47,7 @@ function Question(props) {
     index++;
     currImg = officers[randList[index]].ImageUrl;
     correctName = officers[randList[index]].name;
+    document.getElementById('PersonImg').setAttribute('src', currImg);
   }
   function genRandList(range) {
     randList = new Array();
@@ -59,9 +62,17 @@ function Question(props) {
     }
     return randList;
   }
-  initConnection();
-  console.log("near return")
-  return (<img src="" id = "PersonImg" class = "person-img"></img>);
+  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => initConnection(), []);
+
+  console.log('near return');
+  return (
+    <div>
+      <img src="" id="PersonImg" className="person-img"></img>
+      <NameForm name="" />
+    </div>
+  );
 }
 
 export default Question;

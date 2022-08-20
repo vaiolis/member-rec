@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import NameForm from '../components/NameForm';
+//import NameForm from '../components/NameForm';
 import Question from '../components/Question';
 import './Game.css';
 
 export default function Game() {
-  const [name, setName] = useState('');
+  const [name /*, setName*/] = useState('');
 
   return (
     <div className="Game">
@@ -14,16 +14,13 @@ export default function Game() {
           <h1>Lives</h1>
           <h2>3</h2>
         </div>
-        <Question/>
+        <Question />
         <div className="current-score">
           <h1>Score</h1>
           <h2>7</h2>
         </div>
       </div>
       <div className="mobile-image" />
-      <div>
-        <NameForm name={name} setName={setName} />
-      </div>
     </div>
   );
 }
