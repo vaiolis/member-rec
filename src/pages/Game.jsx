@@ -14,7 +14,7 @@ export default function Game() {
           <h1>Lives</h1>
           <h2>3</h2>
         </div>
-        <Question name = {name} setName = {setName}/>
+        <Question name={name} setName={setName} />
         <div className="current-score">
           <h1>Score</h1>
           <h2>7</h2>

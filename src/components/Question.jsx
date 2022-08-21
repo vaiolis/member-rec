@@ -53,13 +53,13 @@ function Question(props) {
   // making a code change that no longer results in eslint being unhappy with your code.
   // eslint-disable-next-line no-unused-vars
   function nextQuestion() {
-    if(index < officers.length-1) {
+    if (index < officers.length - 1) {
       console.log(randList);
-      console.log(index)
+      console.log(index);
       index++;
       currImg = officers[randList[index]].ImageUrl;
       correctName = officers[randList[index]].name;
-      document.getElementById('PersonImg').setAttribute('src',currImg);
+      document.getElementById('PersonImg').setAttribute('src', currImg);
     }
   }
 
@@ -82,10 +82,10 @@ function Question(props) {
 
   console.log('near return');
   return (
-  <div>
-    <img src="" id="PersonImg" className="person-img"></img>
-    <NameForm name = {name} setName = {setName} nextQuestion = {nextQuestion}/>
-  </div>
+    <div>
+      <img src="" id="PersonImg" className="person-img"></img>
+      <NameForm name={name} setName={setName} nextQuestion={nextQuestion} />
+    </div>
   );
 }
 Question.propTypes = {
