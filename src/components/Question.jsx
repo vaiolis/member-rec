@@ -1,37 +1,39 @@
 import { initializeApp } from 'firebase/app';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
-import React, { useEffect } from 'react';
-import './Question.css';
-import './NameForm';
-import NameForm from './NameForm';
 import PropTypes from 'prop-types';
+import React, { useCallback, useEffect } from 'react';
+import NameForm from './NameForm';
+import './Question.css';
 
 function Question(props) {
-  const { name, setName } = props;
+  const { gameData, guess, setGameData, setGuess } = props;
 
-  function initData() {
-    console.log('started');
-    const data = {
-      officers: [],
-      correctName: '',
-      currImg: '',
-      randList: [],
-      index: 0,
-      points: 0,
-    };
-    window.localStorage.setItem('persistentData', JSON.stringify(data));
-    console.log(JSON.stringify(data));
-  }
-  function setData(jsonObj) {
-    window.localStorage.setItem('persistentData', JSON.stringify(jsonObj));
-  }
-  function readData() {
-    return JSON.parse(window.localStorage.getItem('persistentData'));
-  }
+  const genRandList = useCallback((range) => {
+    const randList = [];
+    const numList = [];
+
+    for (let i = 0; i < range; i++) {
+      numList.push(i);
+    }
+
+    for (let i = 0; i < range; i++) {
+      const randInd = Math.floor(Math.random() * numList.length);
+      randList.push(numList[randInd]);
+      numList.splice(randInd, 1);
+    }
+
+    return randList;
+  }, []);
+
   function initConnection() {
     console.log('inside');
-    initData();
-    const data = readData();
+
+    // Unfortunately, this is a major security vulnerability in your project. By putting api keys
+    // and other authentication secrets in source code, you effectively allow anyone anywhere to make
+    // changes to your firebase database. We will fix this once this project is at a place where it is
+    // ready to be deployed and hosted on a live server (which will also require us to re-issue api keys
+    // and other secrets for this project). Still, I want to call out this vulnerability explicitly here to
+    // make it clear that this code chunk here is a severe security issue and needs to be fixed in the future.
     const firebaseConfig = {
       apiKey: 'AIzaSyAktEso_fJ-wePG4AGcRgo2IBezCKq5cJY',
       authDomain: 'face-rec-js.firebaseapp.com',
@@ -40,60 +42,46 @@ function Question(props) {
       messagingSenderId: '75624240447',
       appId: '1:75624240447:web:31018c9429dd94db666f8a',
     };
+
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    data.index = 0;
+
     const docRef = doc(db, 'main', 'People');
     getDoc(docRef).then((docData) => {
-      data.officers = docData.data().Officers;
-      data.randList = genRandList(data.officers.length);
-      data.currImg = data.officers[data.randList[data.index]].ImageUrl;
-      data.correctName = data.officers[data.randList[data.index]].Name;
-      document.getElementById('PersonImg').setAttribute('src', data.currImg);
-      console.log(data.correctName); // this is being done to satisfy eslint errors
-      setData(data);
+      const index = 0;
+      const officers = docData.data().Officers;
+      const randList = genRandList(officers.length);
+
+      setGameData({
+        ...gameData,
+        index,
+        officers,
+        randList,
+        correctName: officers[randList[index]].Name,
+        imageUrl: officers[randList[index]].ImageUrl,
+      });
     });
   }
 
-  // the purpose of the following comment is to suppress eslint errors for this one function.
-  // DO NOT RELY ON SUPPRESSING ESLINT ERRORS TO RESOLVE ISSUES IN YOUR CODE
-  // I am only doing this to preserve a large-ish block of code within the context of this change set.
-  // Properly resolve eslint errors by understanding the purpose behind the error statement and
-  // making a code change that no longer results in eslint being unhappy with your code.
-  // eslint-disable-next-line no-unused-vars
   function nextQuestion(name) {
-    const data = readData();
-    console.log(JSON.stringify(data) + ' data');
-    console.log(data.correctName + ' l ' + name);
-    if (data.correctName.toLowerCase() == name.toLowerCase()) {
-      data.points++;
-      setData(data);
-      console.log(JSON.stringify(readData()) + ' readData');
-    }
-    if (data.index < data.officers.length - 1) {
-      console.log(data.randList);
-      console.log(data.index);
-      data.index++;
-      data.currImg = data.officers[data.randList[data.index]].ImageUrl;
-      data.correctName = data.officers[data.randList[data.index]].Name;
-      document.getElementById('PersonImg').setAttribute('src', data.currImg);
-      setData(data);
-    }
-  }
+    console.log(JSON.stringify(gameData) + ' data');
+    console.log(gameData.correctName + ' l ' + name);
 
-  function genRandList(range) {
-    var randList = new Array();
-    var numList = new Array();
-    for (let i = 0; i < range; i++) {
-      numList.push(i);
+    const newGameData = { ...gameData };
+    if (gameData.correctName.toLowerCase() == name.toLowerCase()) {
+      newGameData.points = newGameData.points + 1;
     }
-    console.log(numList);
-    for (let i = 0; i < range; i++) {
-      var randInd = Math.floor(Math.random() * numList.length);
-      randList.push(numList[randInd]);
-      numList.splice(randInd, 1);
+
+    if (gameData.index < gameData.officers.length - 1) {
+      console.log(gameData.randList);
+      console.log(gameData.index);
+      const newIndex = newGameData.index + 1;
+      newGameData.index = newIndex;
+      newGameData.correctName = gameData.officers[gameData.randList[newIndex]].Name;
+      newGameData.imageUrl = gameData.officers[gameData.randList[newIndex]].ImageUrl;
+
+      setGameData(newGameData);
     }
-    return randList;
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -102,13 +90,25 @@ function Question(props) {
   console.log('near return');
   return (
     <div>
-      <img src="" id="PersonImg" className="person-img"></img>
-      <NameForm name={name} setName={setName} nextQuestion={nextQuestion} />
+      <NameForm name={guess} setName={setGuess} nextQuestion={nextQuestion} />
     </div>
   );
 }
+
 Question.propTypes = {
-  name: PropTypes.string,
-  setName: PropTypes.func,
+  gameData: PropTypes.shape({
+    officers: PropTypes.array,
+    currentGuess: PropTypes.string,
+    correctName: PropTypes.string,
+    imageUrl: PropTypes.string,
+    randList: PropTypes.array,
+    index: PropTypes.number,
+    points: PropTypes.number,
+    lives: PropTypes.number,
+  }),
+  guess: PropTypes.string,
+  setGameData: PropTypes.func,
+  setGuess: PropTypes.func,
 };
+
 export default Question;

@@ -3,23 +3,34 @@ import React, { useState } from 'react';
 import Question from '../components/Question';
 import './Game.css';
 
+const initialDataState = {
+  officers: [],
+  correctName: '',
+  imageUrl: '',
+  randList: [],
+  index: 0,
+  points: 0,
+  lives: 3,
+};
+
 export default function Game() {
-  const [name, setName] = useState('');
+  const [guess, setGuess] = useState('');
+  const [gameData, setGameData] = useState(initialDataState);
 
   return (
     <div className="Game">
-      {name && <h1 className="player-name">Player Name: {name}</h1>}
       <div className="game-comps">
         <div className="lives">
           <h1>Lives</h1>
-          <h2>3</h2>
+          <h2>{gameData.lives}</h2>
         </div>
-        <Question name={name} setName={setName} />
+        <img src={gameData.imageUrl} id="PersonImg" className="person-img" />
         <div className="current-score">
           <h1>Score</h1>
-          <h2>7</h2>
+          <h2>{gameData.points}</h2>
         </div>
       </div>
+      <Question gameData={gameData} guess={guess} setGameData={setGameData} setGuess={setGuess} />
       <div className="mobile-image" />
     </div>
   );
