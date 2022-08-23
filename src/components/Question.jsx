@@ -11,6 +11,13 @@ function Question(props) {
 
   function initData() {
     console.log('started');
+    // It seems to me that this data is intended to initialize the state of the Question component from the
+    // results of the firebase query. Given that interpretation, I'll assert that the state only needs to
+    // exist within the lifecycle of this component. We can use React's useState hook to keep track of this
+    // state and have our component's render behavior "react" to the changes of this "data" state.
+    // You may want to store data in `window.localStorage` for state that needs to persist between sessions
+    // (for example, saving the user's name when they leave the page and come back). But that's not the
+    // case here, so I'll be refactoring this in the next commit.
     const data = {
       officers: [],
       correctName: '',
@@ -32,6 +39,13 @@ function Question(props) {
     console.log('inside');
     initData();
     const data = readData();
+
+    // Unfortunately, this is a major security vulnerability in your project. By putting api keys
+    // and other authentication secrets in source code, you effectively allow anyone anywhere to make
+    // changes to your firebase database. We will fix this once this project is at a place where it is
+    // ready to be deployed and hosted on a live server (which will also require us to re-issue api keys
+    // and other secrets for this project). Still, I want to call out this vulnerability explicitly here to
+    // make it clear that this code chunk here is a severe security issue and needs to be fixed in the future.
     const firebaseConfig = {
       apiKey: 'AIzaSyAktEso_fJ-wePG4AGcRgo2IBezCKq5cJY',
       authDomain: 'face-rec-js.firebaseapp.com',
@@ -55,12 +69,8 @@ function Question(props) {
     });
   }
 
-  // the purpose of the following comment is to suppress eslint errors for this one function.
-  // DO NOT RELY ON SUPPRESSING ESLINT ERRORS TO RESOLVE ISSUES IN YOUR CODE
-  // I am only doing this to preserve a large-ish block of code within the context of this change set.
-  // Properly resolve eslint errors by understanding the purpose behind the error statement and
-  // making a code change that no longer results in eslint being unhappy with your code.
-  // eslint-disable-next-line no-unused-vars
+  // We no longer need to suppress the eslint warning about no-unused-vars because the `name` variable
+  // is now properly being referenced and used in this function. So that means we can delete the prior comment.
   function nextQuestion(name) {
     const data = readData();
     console.log(JSON.stringify(data) + ' data');
@@ -81,6 +91,10 @@ function Question(props) {
     }
   }
 
+  // The prevailing syntax in this file for defining functions is a bit outdated and
+  // prone to causing unexpected scoping issues. I'll be refactoring this method in the
+  // next commit to provide an example of how to write this function in a more modern way
+  // according to React best practices.
   function genRandList(range) {
     var randList = new Array();
     var numList = new Array();
