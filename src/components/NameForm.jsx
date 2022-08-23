@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './NameForm.css';
 
 function NameForm(props) {
-  const { name, setName } = props;
+  const { name, setName, nextQuestion } = props;
   const handleChange = useCallback(
     (e) => {
       setName(e.target.value);
@@ -14,11 +14,11 @@ function NameForm(props) {
   const handleSubmit = useCallback(
     (e) => {
       alert(`A name was submitted: ${name}`);
+      nextQuestion(name);
       e.preventDefault();
     },
-    [name]
+    [name, nextQuestion]
   );
-
   return (
     <form onSubmit={handleSubmit}>
       <label>
@@ -33,6 +33,7 @@ function NameForm(props) {
 NameForm.propTypes = {
   name: PropTypes.string,
   setName: PropTypes.func,
+  nextQuestion: PropTypes.func,
 };
 
 export default NameForm;
