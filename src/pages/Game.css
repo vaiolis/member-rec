@@ -38,10 +38,6 @@ h2 {
   margin-top: -10px;
 }
 
-.mobile-image {
-  display: none;
-}
-
 h1.player-name {
   text-align: center;
   margin: unset;
@@ -64,19 +60,4 @@ h1.player-name {
     text-align: center;
   }
 
-  .image {
-    display: none;
-  }
-
-  .mobile-image {
-    background-color: aqua;
-    width: 100vw;
-    height: 300px;
-    display: block;
-    margin-top: -50px;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-    align-self: center;
-  }
 }

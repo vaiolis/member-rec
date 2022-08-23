@@ -30,8 +30,8 @@ export default function Game() {
           <h2>{gameData.points}</h2>
         </div>
       </div>
+      <img src={gameData.imageUrl} id="PersonImg" className="mobile-person-img" />
       <Question gameData={gameData} guess={guess} setGameData={setGameData} setGuess={setGuess} />
-      <div className="mobile-image" />
     </div>
   );
 }
