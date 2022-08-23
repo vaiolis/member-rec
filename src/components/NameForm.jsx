@@ -14,7 +14,7 @@ function NameForm(props) {
   const handleSubmit = useCallback(
     (e) => {
       alert(`A name was submitted: ${name}`);
-      nextQuestion;
+      nextQuestion(name);
       e.preventDefault();
     },
     [name, nextQuestion]

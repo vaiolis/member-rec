@@ -8,41 +8,50 @@ import PropTypes from 'prop-types';
 
 function Question(props) {
   const { name, setName } = props;
-  console.log('started');
-  const firebaseConfig = {
-    apiKey: 'AIzaSyAktEso_fJ-wePG4AGcRgo2IBezCKq5cJY',
-    authDomain: 'face-rec-js.firebaseapp.com',
-    projectId: 'face-rec-js',
-    storageBucket: 'face-rec-js.appspot.com',
-    messagingSenderId: '75624240447',
-    appId: '1:75624240447:web:31018c9429dd94db666f8a',
-  };
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  var currImg = null;
-  var correctName = null;
-  var index = 0;
-  var data = null;
-  var randList;
-  var officers;
 
+  function initData() {
+    console.log('started');
+    const data = {
+      officers: [],
+      correctName: '',
+      currImg: '',
+      randList: [],
+      index: 0,
+      points: 0,
+    };
+    window.localStorage.setItem('persistentData', JSON.stringify(data));
+    console.log(JSON.stringify(data));
+  }
+  function setData(jsonObj) {
+    window.localStorage.setItem('persistentData', JSON.stringify(jsonObj));
+  }
+  function readData() {
+    return JSON.parse(window.localStorage.getItem('persistentData'));
+  }
   function initConnection() {
+    console.log('inside');
+    initData();
+    const data = readData();
+    const firebaseConfig = {
+      apiKey: 'AIzaSyAktEso_fJ-wePG4AGcRgo2IBezCKq5cJY',
+      authDomain: 'face-rec-js.firebaseapp.com',
+      projectId: 'face-rec-js',
+      storageBucket: 'face-rec-js.appspot.com',
+      messagingSenderId: '75624240447',
+      appId: '1:75624240447:web:31018c9429dd94db666f8a',
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    data.index = 0;
     const docRef = doc(db, 'main', 'People');
     getDoc(docRef).then((docData) => {
-      try {
-        console.log(docData);
-        data = docData.data();
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-      officers = data.Officers;
-      randList = genRandList(officers.length);
-      currImg = officers[randList[index]].ImageUrl;
-      console.log(currImg);
-      correctName = officers[randList[index]].name;
-      document.getElementById('PersonImg').setAttribute('src', currImg);
-      console.log(correctName); // this is being done to satisfy eslint errors
+      data.officers = docData.data().Officers;
+      data.randList = genRandList(data.officers.length);
+      data.currImg = data.officers[data.randList[data.index]].ImageUrl;
+      data.correctName = data.officers[data.randList[data.index]].Name;
+      document.getElementById('PersonImg').setAttribute('src', data.currImg);
+      console.log(data.correctName); // this is being done to satisfy eslint errors
+      setData(data);
     });
   }
 
@@ -52,27 +61,37 @@ function Question(props) {
   // Properly resolve eslint errors by understanding the purpose behind the error statement and
   // making a code change that no longer results in eslint being unhappy with your code.
   // eslint-disable-next-line no-unused-vars
-  function nextQuestion() {
-    if (index < officers.length - 1) {
-      console.log(randList);
-      console.log(index);
-      index++;
-      currImg = officers[randList[index]].ImageUrl;
-      correctName = officers[randList[index]].name;
-      document.getElementById('PersonImg').setAttribute('src', currImg);
+  function nextQuestion(name) {
+    const data = readData();
+    console.log(JSON.stringify(data) + ' data');
+    console.log(data.correctName + ' l ' + name);
+    if (data.correctName.toLowerCase() == name.toLowerCase()) {
+      data.points++;
+      setData(data);
+      console.log(JSON.stringify(readData()) + ' readData');
+    }
+    if (data.index < data.officers.length - 1) {
+      console.log(data.randList);
+      console.log(data.index);
+      data.index++;
+      data.currImg = data.officers[data.randList[data.index]].ImageUrl;
+      data.correctName = data.officers[data.randList[data.index]].Name;
+      document.getElementById('PersonImg').setAttribute('src', data.currImg);
+      setData(data);
     }
   }
 
   function genRandList(range) {
-    randList = new Array();
+    var randList = new Array();
     var numList = new Array();
     for (let i = 0; i < range; i++) {
       numList.push(i);
     }
+    console.log(numList);
     for (let i = 0; i < range; i++) {
       var randInd = Math.floor(Math.random() * numList.length);
-      randList.push(randInd);
-      numList.splice(i, 1);
+      randList.push(numList[randInd]);
+      numList.splice(randInd, 1);
     }
     return randList;
   }
