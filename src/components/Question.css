@@ -14,7 +14,7 @@
 
 @media screen and (max-width: 500px) {
   .person-img {
-      display:none;
+    display: none;
   }
   .mobile-person-img {
     display: block;

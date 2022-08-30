@@ -70,6 +70,8 @@ function Question(props) {
     const newGameData = { ...gameData };
     if (gameData.correctName.toLowerCase() == name.toLowerCase()) {
       newGameData.points = newGameData.points + 1;
+    } else {
+      newGameData.lives = newGameData.lives - 1;
     }
 
     if (gameData.index < gameData.officers.length - 1) {
