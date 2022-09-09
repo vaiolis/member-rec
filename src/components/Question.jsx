@@ -1,10 +1,9 @@
-import { initializeApp } from 'firebase/app';
-import { doc, getDoc, getFirestore } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect } from 'react';
 import NameForm from './NameForm';
 import './Question.css';
-
+import { initializeFirebase } from './Utils';
 function Question(props) {
   const { gameData, guess, setGameData, setGuess } = props;
 
@@ -34,17 +33,7 @@ function Question(props) {
     // ready to be deployed and hosted on a live server (which will also require us to re-issue api keys
     // and other secrets for this project). Still, I want to call out this vulnerability explicitly here to
     // make it clear that this code chunk here is a severe security issue and needs to be fixed in the future.
-    const firebaseConfig = {
-      apiKey: 'AIzaSyAktEso_fJ-wePG4AGcRgo2IBezCKq5cJY',
-      authDomain: 'face-rec-js.firebaseapp.com',
-      projectId: 'face-rec-js',
-      storageBucket: 'face-rec-js.appspot.com',
-      messagingSenderId: '75624240447',
-      appId: '1:75624240447:web:31018c9429dd94db666f8a',
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    const db = initializeFirebase();
 
     const docRef = doc(db, 'main', 'People');
     getDoc(docRef).then((docData) => {

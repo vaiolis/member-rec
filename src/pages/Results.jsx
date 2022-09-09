@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
-import { doc, updateDoc, arrayUnion, getFirestore } from 'firebase/firestore';
+import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import './Results.css';
 import PropTypes from 'prop-types';
-import { initializeApp } from 'firebase/app';
+import { initializeFirebase } from '../components/Utils';
 import { useNavigate } from 'react-router-dom';
 // import NameForm from '../components/NameForm';
 
@@ -22,29 +22,23 @@ export default function Results(props) {
     },
     [setPlayerName]
   );
+  const pushPlayerToDB = useCallback(
+    (playerName, gameData) => {
+      const db = initializeFirebase();
+      const scores = doc(db, 'main', 'Leaderboard');
+      console.log(playerName + ' helooooo');
+      updateDoc(scores, {
+        Scores: arrayUnion({
+          Name: playerName,
+          Score: gameData.points,
+        }),
+      }).then(navigate('/'));
+    },
+    [navigate]
+  );
   const pushPlayerToDBNoAttrs = useCallback(() => {
     pushPlayerToDB(playerName, gameData);
-  }, [playerName, gameData]);
-  const pushPlayerToDB = useCallback((playerName, gameData) => {
-    const firebaseConfig = {
-      apiKey: 'AIzaSyAktEso_fJ-wePG4AGcRgo2IBezCKq5cJY',
-      authDomain: 'face-rec-js.firebaseapp.com',
-      projectId: 'face-rec-js',
-      storageBucket: 'face-rec-js.appspot.com',
-      messagingSenderId: '75624240447',
-      appId: '1:75624240447:web:31018c9429dd94db666f8a',
-    };
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const scores = doc(db, 'main', 'Leaderboard');
-    console.log(playerName + ' helooooo');
-    updateDoc(scores, {
-      Scores: arrayUnion({
-        Name: playerName,
-        Score: gameData.points,
-      }),
-    }).then(navigate('/'));
-  }, []);
+  }, [playerName, gameData, pushPlayerToDB]);
   return (
     <div>
       <h1 className="header">Your Scorecard</h1>

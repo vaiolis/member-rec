@@ -1,7 +1,24 @@
 import React from 'react';
 import './Leaderboard.css';
-
+import { doc, getDoc } from 'firebase/firestore';
+import { initializeFirebase } from './Utils';
+import { useState } from 'react';
 export default function Leaderboard() {
+  const db = initializeFirebase();
+  const docRef = doc(db, 'main', 'Leaderboard');
+  const [listItems, setItems] = useState(null);
+  getDoc(docRef).then((docData) => {
+    const list = docData.data().Scores.sort((a, b) => (a.Score < b.Score ? 1 : -1)).splice(10);
+    setItems(
+      list.map((entry, index) => (
+        <div className="row" key={index}>
+          <div className="name">{entry.Name}</div>
+          <div className="score">{entry.Score}</div>
+        </div>
+      ))
+    );
+    console.log(listItems);
+  });
   return (
     <div className="leaderboard-container">
       <h1>Leaderboard</h1>
@@ -14,50 +31,7 @@ export default function Leaderboard() {
             <strong>Score</strong>
           </div>
         </div>
-        <div className="row">
-          <div className="name">Player1</div>
-          <div className="score">430</div>
-        </div>
-
-        <div className="row">
-          <div className="name">Player2</div>
-          <div className="score">580</div>
-        </div>
-
-        <div className="row">
-          <div className="name">Player3</div>
-          <div className="score">310</div>
-        </div>
-
-        <div className="row">
-          <div className="name">Player4</div>
-          <div className="score">640</div>
-        </div>
-
-        <div className="row">
-          <div className="name">Player5</div>
-          <div className="score">495</div>
-        </div>
-        <div className="row">
-          <div className="name">Player6</div>
-          <div className="score">495</div>
-        </div>
-        <div className="row">
-          <div className="name">Player7</div>
-          <div className="score">495</div>
-        </div>
-        <div className="row">
-          <div className="name">Player8</div>
-          <div className="score">495</div>
-        </div>
-        <div className="row">
-          <div className="name">Player9</div>
-          <div className="score">495</div>
-        </div>
-        <div className="row">
-          <div className="name">Player10</div>
-          <div className="score">495</div>
-        </div>
+        {listItems}
       </div>
     </div>
   );
