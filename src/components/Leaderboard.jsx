@@ -8,7 +8,7 @@ export default function Leaderboard() {
   const docRef = doc(db, 'main', 'Leaderboard');
   const [listItems, setItems] = useState(null);
   getDoc(docRef).then((docData) => {
-    const list = docData.data().Scores.sort((a, b) => (a.Score < b.Score ? 1 : -1)).splice(10);
+    const list = docData.data().Scores.sort((a, b) => (a.Score < b.Score ? 1 : -1));
     setItems(
       list.map((entry, index) => (
         <div className="row" key={index}>
