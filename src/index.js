@@ -9,11 +9,11 @@ import Results from './pages/Results';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/member-rec">
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="game" element={<Game />} />
-      <Route path="results" element={<Results />} />
+      <Route path="/game" element={<Game />} />
+      <Route path="/results" element={<Results />} />
     </Routes>
   </BrowserRouter>
 );
