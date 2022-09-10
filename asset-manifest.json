@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/member-rec/static/css/main.657f5a9d.css",
+    "main.js": "/member-rec/static/js/main.fd4a5f28.js",
+    "static/media/fblalogo.png": "/member-rec/static/media/fblalogo.b62cba1ead77f20a0354.png",
+    "index.html": "/member-rec/index.html",
+    "main.657f5a9d.css.map": "/member-rec/static/css/main.657f5a9d.css.map",
+    "main.fd4a5f28.js.map": "/member-rec/static/js/main.fd4a5f28.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.657f5a9d.css",
+    "static/js/main.fd4a5f28.js"
+  ]
+}
