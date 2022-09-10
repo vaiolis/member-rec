@@ -13,7 +13,7 @@ function NameForm(props) {
 
   const handleSubmit = useCallback(
     (e) => {
-      alert(`A name was submitted: ${name}`);
+      console.log(`A name was submitted: ${name}`);
       nextQuestion(name);
       e.preventDefault();
     },
