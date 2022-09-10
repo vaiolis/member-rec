@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import './Results.css';
 import PropTypes from 'prop-types';
@@ -39,6 +39,15 @@ export default function Results(props) {
   const pushPlayerToDBNoAttrs = useCallback(() => {
     pushPlayerToDB(playerName, gameData);
   }, [playerName, gameData, pushPlayerToDB]);
+
+  const nameInputRef = useRef(null);
+  useEffect(() => {
+    // focus input once it becomes visible
+    if (nameInputRef.current) {
+      nameInputRef.current.focus();
+    }
+  }, [nameInputRef]);
+
   return (
     <div>
       <h1 className="header">Your Scorecard</h1>
@@ -58,15 +67,15 @@ export default function Results(props) {
                 <strong>Name</strong>
               </div>
               <div className="score">
-                <input name="name" onChange={changeName} value={playerName} />
+                <input ref={nameInputRef} name="name" onChange={changeName} value={playerName} />
               </div>
             </div>
           </div>
         </div>
+        <button onClick={pushPlayerToDBNoAttrs}>
+          <strong>Submit</strong>
+        </button>
       </div>
-      <button onClick={pushPlayerToDBNoAttrs}>
-        <strong>Submit</strong>
-      </button>
     </div>
   );
 }
