@@ -26,7 +26,7 @@ export default function Results(props) {
     (playerName, gameData) => {
       const db = initializeFirebase();
       const scores = doc(db, 'main', 'Leaderboard');
-      console.log(playerName + ' helooooo');
+      // console.log(playerName + ' helooooo');
       updateDoc(scores, {
         Scores: arrayUnion({
           Name: playerName,
