@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import './Home.css';
 import './Results.css';
 import PropTypes from 'prop-types';
 import { initializeFirebase } from '../components/Utils';
@@ -49,7 +50,7 @@ export default function Results(props) {
   }, [nameInputRef]);
 
   return (
-    <div>
+    <div className="main">
       <h1 className="header">Your Scorecard</h1>
       <div className="results">
         <div className="results-card">
@@ -72,7 +73,7 @@ export default function Results(props) {
             </div>
           </div>
         </div>
-        <button onClick={pushPlayerToDBNoAttrs}>
+        <button className="results-submit-button" onClick={pushPlayerToDBNoAttrs}>
           <strong>Submit</strong>
         </button>
       </div>

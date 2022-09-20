@@ -4,8 +4,6 @@ import Home from './pages/Home';
 import Game from './pages/Game';
 import Results from './pages/Results';
 
-import './App.css';
-
 export default function App() {
   return (
     <HashRouter>
