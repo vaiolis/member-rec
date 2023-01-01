@@ -2,7 +2,6 @@ import { doc, getDoc } from 'firebase/firestore';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect } from 'react';
 import NameForm from './NameForm';
-import './Question.css';
 import { initializeFirebase } from './Utils';
 function Question(props) {
   const { gameData, guess, setGameData, setGuess } = props;

@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import './NameForm.css';
 
 function NameForm(props) {
   const { name, setName, nextQuestion } = props;
