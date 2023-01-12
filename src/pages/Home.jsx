@@ -25,8 +25,7 @@ function Home() {
           <h1 className="font-bold text-2xl text-blue-700 my-5">How To Play?</h1>
           <p className='text-lg my-5'>
             Type the first name of each face that comes up. If you don’t know or get one wrong, you
-            will lose 1 life. Lose 3 lives and your final score is recorded. You need [x] to make it
-            to the Top 10!
+            will lose 1 life. Lose 3 lives and your final score is recorded. Try to make it to the top ten!
           </p>
         </div>
       </div>
