@@ -7,7 +7,7 @@ import './Home.css'
 
 function Game(props) {
   const [gameData, setGameData] = useState({});
-  const [level, setLevel] = useState(0);
+  const [level, setLevel] = useState(4);
   const navigate = useNavigate();
   const genRandList = useCallback((range) => {
   const randList = [];
@@ -109,7 +109,7 @@ function Game(props) {
     navigate(`/results?${btoa(`score=${gameData.points}&level=${level + 1}`)}`);
   }
 
-  const blurFactor = level * 5;
+  const blurFactor = level * 10;
 
   return (
     <div className='bg-black text-white lg:h-[100vh] py-10 lg:bg-gradient-to-r from-black via-[#4b1900] to-black background-animate'>
@@ -127,8 +127,10 @@ function Game(props) {
           <h2 className='font-semibold text-4xl text-white'>{gameData.points}</h2>
         </div>
       </div>
-      <div style={{filter: `blur(${blurFactor}px)`}} className={`flex justify-center mb-10`}>
-        <img alt="Member" src={gameData.imageUrl} className={`object-cover h-96 w-96 rounded-xl shadow-xl`} />
+      <div style={{
+          filter: `blur(${blurFactor}px)`, 
+        }} className={`flex justify-center mb-10`}>
+        <img alt="Member" src={gameData.imageUrl} style={{filter: `grayscale(${blurFactor}%)`}} className={`object-cover h-96 w-96 rounded-xl shadow-xl`} />
       </div>
       <div className="grid lg:grid-cols-2 grid-rows-2 gap-4 grid-cols-1 my-5 mx-10">
         {nameDivs}
