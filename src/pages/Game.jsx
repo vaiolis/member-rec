@@ -105,13 +105,13 @@ function Game(props) {
   });
 
   if (gameData.lives === 0) {
-    navigate(`/results?score=${gameData.points}&level=${gameData.level}`);
+    navigate(`/results?${btoa(`score=${gameData.points}&level=${level + 1}`)}`);
   }
 
   const blurFactor = level * 5;
 
   return (
-    <div className='bg-black text-white lg:h-[100vh] py-10'>
+    <div className='bg-black text-white lg:h-[100vh] py-10 '>
       <div className="grid gap-4 lg:grid-cols-3 grid-cols-3 mb-10">
         <div className="text-center">
           <h1 className='font-bold text-2xl text-blue-700'>Lives</h1>

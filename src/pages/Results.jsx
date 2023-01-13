@@ -5,9 +5,15 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function Results() {
   const location = useLocation()
-  const params = new URLSearchParams(location.search)
+  // console.log(params)
+  // console.log(params.get('score'))
+  // console.log(atob(balls))
+  // console.log(atob(location.search))
+  const params = new URLSearchParams((atob(location.search.substring(1, location.search.length))))
   const score = params.get('score')
   const level = params.get('level')
+  // const score = 7
+  // const level = 7
   const [name, setName] = useState('');
   const navigate = useNavigate();
 
