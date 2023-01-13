@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initializeFirebase } from '../models/utils';
+import './Home.css'
 
 function Game(props) {
   const [gameData, setGameData] = useState({});
@@ -98,7 +99,7 @@ function Game(props) {
 
   const nameDivs = shuffledNames.map((name, index) => {
     return (
-      <div onClick={handleClick} key={index} className="hover:scale-[1.03] transition ease-linear-1000 border-white border-2 rounded-lg p-5 bg-gray-900 hover:bg-gray-600">
+      <div onClick={handleClick} key={index} className="hover:scale-[1.03] transition ease-linear-1000 border-[#6e3f13] border-2 rounded-lg p-5 bg-[#221203] hover:bg-orange-900">
         {name}
       </div>
     );
@@ -111,7 +112,7 @@ function Game(props) {
   const blurFactor = level * 5;
 
   return (
-    <div className='bg-black text-white lg:h-[100vh] py-10 '>
+    <div className='bg-black text-white lg:h-[100vh] py-10 lg:bg-gradient-to-r from-black via-[#4b1900] to-black background-animate'>
       <div className="grid gap-4 lg:grid-cols-3 grid-cols-3 mb-10">
         <div className="text-center">
           <h1 className='font-bold text-2xl text-blue-700'>Lives</h1>
@@ -127,7 +128,7 @@ function Game(props) {
         </div>
       </div>
       <div style={{filter: `blur(${blurFactor}px)`}} className={`flex justify-center mb-10`}>
-        <img alt="Member" src={gameData.imageUrl} className={`object-cover h-96 w-96`} />
+        <img alt="Member" src={gameData.imageUrl} className={`object-cover h-96 w-96 rounded-xl shadow-xl`} />
       </div>
       <div className="grid lg:grid-cols-2 grid-rows-2 gap-4 grid-cols-1 my-5 mx-10">
         {nameDivs}
