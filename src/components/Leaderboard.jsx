@@ -28,7 +28,7 @@ export default function Leaderboard() {
   }, [docRef]);
 
   return (
-    <div className="px-10 py-14">
+    <div className="lg:px-32 px-10 py-14 m-auto w-full">
       <h1 className='font-bold text-2xl text-blue-700'>Leaderboard</h1>
       <div className="grid grid-cols-3 align-middle self-center">
         <div className="font-bold text-lg text-purple-500 my-5 text-left">Name</div>
