@@ -6,10 +6,11 @@ import { initializeFirebase } from '../models/utils';
 
 function Game(props) {
   const [gameData, setGameData] = useState({});
+  const [level, setLevel] = useState(0);
   const navigate = useNavigate();
   const genRandList = useCallback((range) => {
-    const randList = [];
-    const numList = [];
+  const randList = [];
+  const numList = [];
 
     for (let i = 0; i < range; i++) {
       numList.push(i);
@@ -58,10 +59,18 @@ function Game(props) {
       newGameData.index = newIndex;
       newGameData.correctName = gameData.officers[gameData.randList[newIndex]].Name;
       newGameData.imageUrl = gameData.officers[gameData.randList[newIndex]].ImageUrl;
+    } else {
+      newGameData.level += 1;
+      setLevel(level + 1);
+      newGameData.index = 0;
+      newGameData.randList = genRandList(gameData.officers.length);
+      newGameData.correctName = gameData.officers[gameData.randList[0]].Name;
+      newGameData.imageUrl = gameData.officers[gameData.randList[0]].ImageUrl;
     }
 
     setGameData(newGameData);
   }
+
 
   useEffect(() => {
     initConnection();
@@ -89,15 +98,17 @@ function Game(props) {
 
   const nameDivs = shuffledNames.map((name, index) => {
     return (
-      <div onClick={handleClick} key={index} className="border-white border-2 rounded-lg p-5 bg-gray-900 hover:bg-gray-600">
+      <div onClick={handleClick} key={index} className="hover:scale-[1.03] transition ease-linear-1000 border-white border-2 rounded-lg p-5 bg-gray-900 hover:bg-gray-600">
         {name}
       </div>
     );
   });
 
   if (gameData.lives === 0) {
-    navigate(`/results?score=${gameData.points}&level=${70}`);
+    navigate(`/results?score=${gameData.points}&level=${gameData.level}`);
   }
+
+  const blurFactor = level * 5;
 
   return (
     <div className='bg-black text-white lg:h-[100vh] py-10'>
@@ -108,15 +119,15 @@ function Game(props) {
         </div>
         <div className="text-center">
           <h1 className='font-bold text-2xl text-blue-700'>Level</h1>
-          <h2 className='font-semibold text-4xl text-white'>{1}</h2>
+          <h2 className='font-semibold text-4xl text-white'>{level + 1}</h2>
         </div>
         <div className="text-center">
           <h1 className='font-bold text-2xl text-blue-700'>Score</h1>
           <h2 className='font-semibold text-4xl text-white'>{gameData.points}</h2>
         </div>
       </div>
-      <div className='flex justify-center mb-10'>
-        <img alt="Member Picture" src={gameData.imageUrl} className="blur-[100] object-cover h-96 w-96" />
+      <div style={{filter: `blur(${blurFactor}px)`}} className={`flex justify-center mb-10`}>
+        <img alt="Member" src={gameData.imageUrl} className={`object-cover h-96 w-96`} />
       </div>
       <div className="grid lg:grid-cols-2 grid-rows-2 gap-4 grid-cols-1 my-5 mx-10">
         {nameDivs}

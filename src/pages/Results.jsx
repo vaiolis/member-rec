@@ -7,7 +7,7 @@ export default function Results() {
   const location = useLocation()
   const params = new URLSearchParams(location.search)
   const score = params.get('score')
-  const time = params.get('level')
+  const level = params.get('level')
   const [name, setName] = useState('');
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ export default function Results() {
       Scores: arrayUnion({
         Name: name,
         Score: score,
-        Time: time
+        Level: level
       }),
     }).then(navigate('/'));
   }
@@ -37,7 +37,7 @@ export default function Results() {
                 <strong>Level</strong>
               </div>
               <div className="text-blue-500">
-                <strong>{time}</strong>
+                <strong>{level}</strong>
               </div>
               <div className="">
                 <strong>Name</strong>
